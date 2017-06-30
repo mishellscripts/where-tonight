@@ -14,31 +14,32 @@ module.exports = function (app, passport) {
 	}
 
 	var clickHandler = new ClickHandler();
+	
+	const Yelp = require('node-yelp-fusion');
+	const yelp = new Yelp({ id: process.env.CLIENT_ID , secret: process.env.CLIENT_SECRET });
 
 	app.route('/')
-		.get(isLoggedIn, function (req, res) {
-			res.sendFile(path + '/public/index.html');
-		});
-
-	app.route('/login')
 		.get(function (req, res) {
-			res.sendFile(path + '/public/login.html');
+			res.render('index', {user: req.user});
+		})
+		// Search: Login not required for search
+		.post(function (req, res) {
+			console.log(req.body);
+			yelp.search("term=bar&location=" + req.body.location)
+			    .then(function(result){
+			           res.render('index', {user: req.user, bars: result});
+			        });
 		});
 
 	app.route('/logout')
 		.get(function (req, res) {
 			req.logout();
-			res.redirect('/login');
+			res.redirect('/');
 		});
 
 	app.route('/profile')
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/profile.html');
-		});
-
-	app.route('/api/:id')
-		.get(isLoggedIn, function (req, res) {
-			res.json(req.user.github);
 		});
 
 	app.route('/auth/github')
@@ -47,11 +48,7 @@ module.exports = function (app, passport) {
 	app.route('/auth/github/callback')
 		.get(passport.authenticate('github', {
 			successRedirect: '/',
-			failureRedirect: '/login'
+			failureRedirect: '/' // add error message
 		}));
 
-	app.route('/api/:id/clicks')
-		.get(isLoggedIn, clickHandler.getClicks)
-		.post(isLoggedIn, clickHandler.addClick)
-		.delete(isLoggedIn, clickHandler.resetClicks);
 };

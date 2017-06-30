@@ -1,0 +1,32 @@
+doctype html
+html
+	head
+		title Clementine.js - The elegant and lightweight full stack JavaScript boilerplate.
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', 
+		integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+		link(href="https://fonts.googleapis.com/css?family=Nunito:600" rel="stylesheet")
+		link(href='/public/css/main.css', rel='stylesheet', type='text/css')
+	body
+		.container
+			.row#welcome
+				h2
+					| wheretonight?
+				.welcome-container.text-center
+					h1.h1-pad 
+						| Search for bars around your area
+					a.menu(href='#') View source code
+					if user
+						a.menu(href='/profile') View my RSVPs
+						a.menu(href='/logout') Log out
+					else
+						a.menu(href='/auth/github') Login with Github
+			.row#prompt
+				form(method="post")
+					h1 Enter your location 
+					input(type="text" id="location" placeholder="Enter your location here")
+					button(type="submit" value="Submit" id="btn-search")
+						| Find
+				#bars
+	script(type='text/javascript', src='common/ajax-functions.js')
+	script(type='text/javascript', src='controllers/clickController.client.js')
+	script(type='text/javascript', src='controllers/userController.client.js')

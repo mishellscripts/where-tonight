@@ -1,31 +1,24 @@
 'use strict';
 
 (function () {
+   console.log("happening");
 
-   var addButton = document.querySelector('.btn-add');
-   var deleteButton = document.querySelector('.btn-delete');
-   var clickNbr = document.querySelector('#click-nbr');
-   var apiUrl = appUrl + '/api/:id/clicks';
-
-   function updateClickCount (data) {
-      var clicksObject = JSON.parse(data);
-      clickNbr.innerHTML = clicksObject.clicks;
+   const searchButton = document.querySelector('#btn-search');
+   const bars = document.querySelector("#bars");
+   function updateBars (data) {
+      console.log("hello");
+      const clicksObject = JSON.parse(data);
+      const barsHTML = "";
+      // Generate html here
+      bars.innerHTML = barsHTML;
    }
 
-   ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, updateClickCount));
+   ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', '/', updateBars));
 
-   addButton.addEventListener('click', function () {
+   searchButton.addEventListener('click', function () {
 
-      ajaxFunctions.ajaxRequest('POST', apiUrl, function () {
-         ajaxFunctions.ajaxRequest('GET', apiUrl, updateClickCount);
-      });
-
-   }, false);
-
-   deleteButton.addEventListener('click', function () {
-
-      ajaxFunctions.ajaxRequest('DELETE', apiUrl, function () {
-         ajaxFunctions.ajaxRequest('GET', apiUrl, updateClickCount);
+      ajaxFunctions.ajaxRequest('POST', '/', function () {
+         ajaxFunctions.ajaxRequest('GET', '/', updateBars);
       });
 
    }, false);
