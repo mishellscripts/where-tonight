@@ -81,24 +81,42 @@ a {
 	font-weight: 400;
 }
 
-
-a > img {
-	color:;
-	margin-left: 10px
-}
-
-#prompt form input {
+#search-form input {
 	height: 60px;
-	width: 60%;
+	width: 70%;
 	position: relative;
 	margin-left: 10%;
 	font-size: 1.5em;
 }
 
-#prompt form button {
+#search-form button {
 	height: 60px;
 	width: 10%;
 	border-color: rgb(27, 38, 53);
 	background: rgb(27, 38, 53);
 	color: #ffffff;
+}
+
+#bars {
+	margin-left: 10%;
+}
+
+.bar {
+	float: left;
+	width: 40%;
+	margin: 2.5% 5% 2.5% 0%;
+	border-radius: 10px;
+	border: 2px solid #000000;
+	background-color: #ffffff;
+}
+
+.bar-img {
+	float: left;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.bar-description {
+	margin-right: 10%;
+	float: right;
 }

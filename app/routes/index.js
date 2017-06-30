@@ -1,7 +1,6 @@
 'use strict';
 
 var path = process.cwd();
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 
 module.exports = function (app, passport) {
 
@@ -13,8 +12,6 @@ module.exports = function (app, passport) {
 		}
 	}
 
-	var clickHandler = new ClickHandler();
-	
 	const Yelp = require('node-yelp-fusion');
 	const yelp = new Yelp({ id: process.env.CLIENT_ID , secret: process.env.CLIENT_SECRET });
 
@@ -27,7 +24,8 @@ module.exports = function (app, passport) {
 			console.log(req.body);
 			yelp.search("term=bar&location=" + req.body.location)
 			    .then(function(result){
-			           res.render('index', {user: req.user, bars: result});
+			    		//res.send(result);
+			           res.render('index', {user: req.user, bars: result.businesses});
 			        });
 		});
 
