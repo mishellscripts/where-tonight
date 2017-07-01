@@ -25,7 +25,7 @@ module.exports = function (app, passport) {
 			yelp.search("term=bar&location=" + req.body.location)
 			    .then(function(result){
 			    		//res.send(result);
-			           res.render('index', {user: req.user, bars: result.businesses});
+			           res.render('index', {user: req.user, location: req.body.location, bars: result.businesses});
 			        });
 		});
 
