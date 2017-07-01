@@ -1,6 +1,8 @@
 'use strict';
 
-var path = process.cwd();
+const path = process.cwd();
+const Bar = require('../models/bars.js');
+const User = require('../models/users.js');
 
 module.exports = function (app, passport) {
 
@@ -17,17 +19,66 @@ module.exports = function (app, passport) {
 
 	app.route('/')
 		.get(function (req, res) {
-			res.render('index', {user: req.user});
+			// If user is logged in, check if they have a previous saved location to search for
+			if (req.isAuthenticated()) {
+				User.findById(req.user.id, function(err, user) {
+					// If location was entered previously before
+					if (user.location) {
+						yelp.search("term=bar&location=" + user.location)
+							.then(function(result) {
+								return res.render('index', {user: req.user, bars: result.businesses});
+							}
+						);
+					}
+				})
+			} else {
+				return res.render('index', {user: req.user});
+			}
 		})
 		// Search: Login not required for search
 		.post(function (req, res) {
-			console.log(req.body);
 			yelp.search("term=bar&location=" + req.body.location)
 			    .then(function(result){
-			    		//res.send(result);
-			           res.render('index', {user: req.user, location: req.body.location, bars: result.businesses});
-			        });
+		    		if (req.isAuthenticated()) {
+	    				User.findByIdAndUpdate(req.user.id, 
+	    					{$set: {location: result.businesses[0].location.city}});
+	    			}
+		    		result.businesses.forEach(function(bar, index) {
+		    			// Create new bar and save to the database
+		    			const newBar = new Bar({ 
+		    				name: bar.name, 
+		    				location: {
+		    					display_address: bar.location.display_address,
+		    					city: bar.location.city
+		    				},
+		    				price: bar.price,
+		    				rating: bar.rating
+		    			});
+		    			newBar.save(function(err) {
+		    				if (err) console.log(err.message);
+		    			});
+		    			
+		    			if (index === result.businesses.length - 1) {
+			           		res.render('index', {user: req.user, 
+			           			location: result.businesses[0].location.city, bars: result.businesses});
+		    			}
+		    		});
+		    	});
 		});
+
+	app.route('/bars')
+		.get(function(req, res) {
+			Bar.find({}, function(err, results) {
+				res.send(results);
+			})
+		})
+		
+	app.route('/users')
+		.get(function(req, res) {
+			User.find({}, function(err, results) {
+				res.send(results);
+			})
+		})		
 
 	app.route('/logout')
 		.get(function (req, res) {

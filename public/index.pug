@@ -6,19 +6,19 @@ html
 		link(href="https://fonts.googleapis.com/css?family=Nunito:600", rel="stylesheet")
 		link(href='/public/css/main.css', rel='stylesheet', type='text/css')
 	body
+		#welcome
+			h2
+				| wheretonight?
+			.welcome-container.text-center
+				h1.h1-pad 
+					| Search for bars around your area
+				a.menu(href='#') View source code
+				if user
+					a.menu(href='/profile') View my RSVPs
+					a.menu(href='/logout') Log out
+				else
+					a.menu(href='/auth/github') Login with Github
 		.container
-			.row#welcome
-				h2
-					| wheretonight?
-				.welcome-container.text-center
-					h1.h1-pad 
-						| Search for bars around your area
-					a.menu(href='#') View source code
-					if user
-						a.menu(href='/profile') View my RSVPs
-						a.menu(href='/logout') Log out
-					else
-						a.menu(href='/auth/github') Login with Github
 			.row#prompt
 				form(method='post', id='search-form')
 					h1 Enter your location 
@@ -30,19 +30,21 @@ html
 				each bar in bars
 					.row.bar-row
 						.col-md-4
-						a(href=bar.url)
-							.bar.col-md-4 
-								.bar-description
+						.bar.col-md-4 
+							.bar-description
+								i(class="fa fa-envelope-open send-rsvp" aria-hidden="true")
+									#{bar.rsvps}
+								a(href=bar.url)
 									h4 #{bar.name}
-									p #{bar.location.display_address}
-									h4 #{bar.price}
-									- var baseRating = Math.floor(bar.rating)
-									- for (var i = 0; i < baseRating; ++i) {
-										i(class="fa fa-star" aria-hidden="true")
-									- }
-									- if (Math.round(bar.rating) != baseRating) {
-										i(class="fa fa-star-half-o" aria-hidden="true")
-									- }
+								p #{bar.location.display_address}
+								h4 #{bar.price}
+								- var baseRating = Math.floor(bar.rating)
+								- for (var i = 0; i < baseRating; ++i) {
+									i(class="fa fa-star" aria-hidden="true")
+								- }
+								- if (Math.round(bar.rating) != baseRating) {
+									i(class="fa fa-star-half-o" aria-hidden="true")
+								- }
 						.col-md-4
 	script(src='https://code.jquery.com/jquery-2.2.1.min.js', integrity='sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=', crossorigin='anonymous')
 	script(src='https://use.fontawesome.com/82d62de1e5.js')

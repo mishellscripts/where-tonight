@@ -1,48 +1,11 @@
 /****** Main Styling ******/
-body {
-	font-family: 'Nunito', sans-serif;
-	min-height: 100%;
-}
-
-html {
-  	min-height: 100%;
-}
-
-.container{ 
-	width: 100%;
-	
-		/* fallback for older browsers */
-	background: rgb(229, 229, 229);
-
-	/* for chrome, safari, ie, firefox */
-	background: -webkit-linear-gradient(to bottom, #e5e5e5, #fcfcfc);
-	background: -moz-linear-gradient(to bottom, #e5e5e5, #fcfcfc);
-	background: -o-linear-gradient(to bottom, #e5e5e5, #fcfcfc);
-	background: linear-gradient(to bottom, #e5e5e5, #fcfcfc);
-}
-
-#welcome {
-  background: URL('/public/img/night_background.png') no-repeat;
-  background-size: 100%;
-  color: #ffffff;
-}
-
-.welcome-container {
-	position: relative;
-	margin: 15% 0%;
+h1 {
+	font-size: 3em;
+	margin-top: 5%;
 }
 
 .h1-pad {
 	margin: 5%;
-}
-
-#prompt h1 {
-	margin-left: 10%;
-}
-
-h1 {
-	font-size: 3em;
-	margin-top: 5%;
 }
 
 h2 {
@@ -50,7 +13,24 @@ h2 {
 	color: #727272;
 }
 
-#welcome a {
+html, body {
+  	min-height: 100%;
+}
+
+body {
+	font-family: 'Nunito', sans-serif;
+	background: URL('/public/img/night_background_base.png') no-repeat fixed;
+  	background-size: 100%;
+	color: rgb(27, 38, 53);
+  	width: 100%;
+  	z-index: 0;
+}
+
+#welcome {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
 	color: #ffffff;
 }
 
@@ -75,6 +55,36 @@ h2 {
 	color: #727272;
 }
 
+.welcome-container {
+	margin: 15% 0%;
+}
+
+.welcome-container a {
+	color: #ffffff;
+}
+
+.container { 
+	position: relative;
+	z-index: 9;
+	width: 100%;
+	margin-top: 100%;
+		/* fallback for older browsers */
+	background: rgb(229, 229, 229);
+
+	/* for chrome, safari, ie, firefox */
+	background: -webkit-linear-gradient(to bottom, #e5e5e5, #fcfcfc);
+	background: -moz-linear-gradient(to bottom, #e5e5e5, #fcfcfc);
+	background: -o-linear-gradient(to bottom, #e5e5e5, #fcfcfc);
+	background: linear-gradient(to bottom, #e5e5e5, #fcfcfc);
+}
+
+
+
+#prompt h1 {
+	margin-left: 10%;
+}
+
+
 #prompt {
 	background: rgb(229, 229, 229);
 	height: auto;
@@ -85,9 +95,6 @@ h2 {
 	color: rgb(27, 38, 53);
 }
 
-#display-name {
-	font-weight: 400;
-}
 
 #search-form input {
 	height: 60px;
@@ -114,4 +121,10 @@ h2 {
 }
 
 .bar-description {
+}
+
+.send-rsvp {
+	cursor: pointer;
+	float: right;
+	font-size: 2em !important;
 }
