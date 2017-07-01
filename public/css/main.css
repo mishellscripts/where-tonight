@@ -67,10 +67,10 @@ body {
 	position: relative;
 	z-index: 9;
 	width: 100%;
-	margin-top: 100%;
+	margin-top: 800px;
 		/* fallback for older browsers */
 	background: rgb(229, 229, 229);
-
+	padding-bottom: 100px;
 	/* for chrome, safari, ie, firefox */
 	background: -webkit-linear-gradient(to bottom, #e5e5e5, #fcfcfc);
 	background: -moz-linear-gradient(to bottom, #e5e5e5, #fcfcfc);
@@ -121,10 +121,22 @@ body {
 }
 
 .bar-description {
+	margin-left: 2%;
 }
 
 .send-rsvp {
 	cursor: pointer;
-	float: right;
 	font-size: 2em !important;
+}
+
+.credits {
+	color: white;
+	font-size: 1.5em;
+	text-align: center;
+	margin-top: 100px;
+}
+
+.rsvp {
+	float: right;
+	margin-right: 2%;
 }

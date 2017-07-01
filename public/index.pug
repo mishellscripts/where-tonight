@@ -14,7 +14,6 @@ html
 					| Search for bars around your area
 				a.menu(href='#') View source code
 				if user
-					a.menu(href='/profile') View my RSVPs
 					a.menu(href='/logout') Log out
 				else
 					a.menu(href='/auth/github') Login with Github
@@ -32,12 +31,16 @@ html
 						.col-md-4
 						.bar.col-md-4 
 							.bar-description
-								i(class="fa fa-envelope-open send-rsvp" aria-hidden="true")
-									#{bar.rsvps}
-								a(href=bar.url)
+								.rsvp
+									p
+										if bar.rsvps
+											| #{bar.rsvps} RSVPs
+										else
+											| 0 RSVPs
+									i(class="fa fa-envelope-open send-rsvp" aria-hidden="true")
+								a(href=bar.url class="bar-url")
 									h4 #{bar.name}
 								p #{bar.location.display_address}
-								h4 #{bar.price}
 								- var baseRating = Math.floor(bar.rating)
 								- for (var i = 0; i < baseRating; ++i) {
 									i(class="fa fa-star" aria-hidden="true")
@@ -46,6 +49,8 @@ html
 									i(class="fa fa-star-half-o" aria-hidden="true")
 								- }
 						.col-md-4
+		.credits
+			p Coded by mishellscripts | Powered by Yelp
 	script(src='https://code.jquery.com/jquery-2.2.1.min.js', integrity='sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=', crossorigin='anonymous')
 	script(src='https://use.fontawesome.com/82d62de1e5.js')
 	script(type='text/javascript', src='/public/js/main.js')

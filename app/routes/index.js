@@ -3,8 +3,11 @@
 const path = process.cwd();
 const Bar = require('../models/bars.js');
 const User = require('../models/users.js');
+const ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server.js');
 
 module.exports = function (app, passport) {
+
+	var rsvpHandler = new rsvpHandler(Bar);
 
 	function isLoggedIn (req, res, next) {
 		if (req.isAuthenticated()) {
@@ -51,7 +54,6 @@ module.exports = function (app, passport) {
 		    					display_address: bar.location.display_address,
 		    					city: bar.location.city
 		    				},
-		    				price: bar.price,
 		    				rating: bar.rating
 		    			});
 		    			newBar.save(function(err) {
@@ -99,5 +101,7 @@ module.exports = function (app, passport) {
 			successRedirect: '/',
 			failureRedirect: '/' // add error message
 		}));
-
+		
+	app.route('/api/rsvps')
+		.get(rsvpHandler.getRSVPS);
 };
