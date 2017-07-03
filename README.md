@@ -8,6 +8,12 @@ Users can look up bars around their location and verify where they are headed fo
 This application requires the Yelp Fusion API, ExpressJS web framework, MongoDB, Express, Pug, and Node.js. [Clementine](http://www.clementinejs.com/), a Javascript boilerplate, was used for quicker implementation. 
 Github authentication is used for security and login purposes and is accomplished by using [Passport](http://passportjs.org/). 
 
+### User Stories
+1) As an unauthenticated user, I can view all bars in my area.
+2) As an authenticated user, I can add myself to a bar to indicate I am going there tonight.
+3) As an authenticated user, I can remove myself from a bar if I no longer want to go there.
+4) As an unauthenticated user, when I login I should not have to search again.
+
 Demo: https://wheretonight-mishellscripts.c9users.io/
 
 
