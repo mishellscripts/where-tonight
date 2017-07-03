@@ -92,7 +92,7 @@ module.exports = function (app, passport) {
 			User.find({}, function(err, results) {
 				res.send(results);
 			})
-		})		
+		})
 
 	app.route('/logout')
 		.get(function (req, res) {

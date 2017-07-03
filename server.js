@@ -29,6 +29,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());                        
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({origin: 'https://wheretonight-mishellscripts.c9users.io'}));
+
 
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/public')
@@ -40,6 +42,7 @@ app.listen(port,  function () {
 	console.log('Node.js listening on port ' + port + '...');
 });
 
+/*
 var Bar = require('./app/models/bars.js');
 var User = require('./app/models/users.js');
 User.remove({}, function(err) { 
@@ -48,17 +51,4 @@ User.remove({}, function(err) {
 
 Bar.remove({}, function(err) { 
    console.log('collection removed') 
-});
-
-app.all('*', function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');
-     // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
-      res.send(200);
-    }
-    else {
-      next();
-    }
-});
+});*/
