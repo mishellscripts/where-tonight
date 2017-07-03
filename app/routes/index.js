@@ -3,19 +3,19 @@
 const path = process.cwd();
 const Bar = require('../models/bars.js');
 const User = require('../models/users.js');
-const ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server.js');
+var RSVPHandler = require(path + '/app/controllers/rsvpHandler.server.js');
 
 module.exports = function (app, passport) {
-
-	var rsvpHandler = new rsvpHandler(Bar);
 
 	function isLoggedIn (req, res, next) {
 		if (req.isAuthenticated()) {
 			return next();
 		} else {
-			res.redirect('/login');
+			res.redirect('/auth/github');
 		}
 	}
+	
+	var rsvpHandler = new RSVPHandler();	
 
 	const Yelp = require('node-yelp-fusion');
 	const yelp = new Yelp({ id: process.env.CLIENT_ID , secret: process.env.CLIENT_SECRET });
@@ -32,6 +32,8 @@ module.exports = function (app, passport) {
 								return res.render('index', {user: req.user, bars: result.businesses});
 							}
 						);
+					} else {
+						return res.render('index', {user: req.user});
 					}
 				})
 			} else {
@@ -40,11 +42,15 @@ module.exports = function (app, passport) {
 		})
 		// Search: Login not required for search
 		.post(function (req, res) {
+			if (req.body.location) {
 			yelp.search("term=bar&location=" + req.body.location)
 			    .then(function(result){
 		    		if (req.isAuthenticated()) {
-	    				User.findByIdAndUpdate(req.user.id, 
-	    					{$set: {location: result.businesses[0].location.city}});
+	    				User.findByIdAndUpdate(req.user._id, 
+	    					{$set: {location: result.businesses[0].location.city}},
+	    					function(err) {
+	    						console.log(result.businesses[0].location.city);
+	    					});
 	    			}
 		    		result.businesses.forEach(function(bar, index) {
 		    			// Create new bar and save to the database
@@ -54,7 +60,8 @@ module.exports = function (app, passport) {
 		    					display_address: bar.location.display_address,
 		    					city: bar.location.city
 		    				},
-		    				rating: bar.rating
+		    				rating: bar.rating,
+		    				barID: bar.id
 		    			});
 		    			newBar.save(function(err) {
 		    				if (err) console.log(err.message);
@@ -62,10 +69,15 @@ module.exports = function (app, passport) {
 		    			
 		    			if (index === result.businesses.length - 1) {
 			           		res.render('index', {user: req.user, 
-			           			location: result.businesses[0].location.city, bars: result.businesses});
+			           			location: result.businesses[0].location.city, 
+			           			bars: result.businesses
+			           		});
 		    			}
 		    		});
 		    	});
+			} else {
+				res.send('invalid location');
+			}
 		});
 
 	app.route('/bars')
@@ -101,7 +113,15 @@ module.exports = function (app, passport) {
 			successRedirect: '/',
 			failureRedirect: '/' // add error message
 		}));
+	
+	app.route('/api/get/:barID')
+		.get(rsvpHandler.getClicks);
 		
-	app.route('/api/rsvps')
-		.get(rsvpHandler.getRSVPS);
+	app.route('/api/add/:barID')
+		.get(isLoggedIn, rsvpHandler.getClicks)		
+		.post(isLoggedIn, rsvpHandler.addClick);
+
+	app.route('/api/remove/:barID')
+		.get(isLoggedIn, rsvpHandler.getClicks)	
+		.delete(isLoggedIn, rsvpHandler.removeClick);
 };

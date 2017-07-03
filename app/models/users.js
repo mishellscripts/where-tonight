@@ -9,7 +9,7 @@ var User = new Schema({
 		displayName: String,
 		username: String
 	},
-    bars: [{ type : Schema.Types.ObjectId, ref: 'Bar' }],
+    //bars: [{ type : Schema.Types.ObjectId, ref: 'Bar' }],
     location: {type: String}
 });
 

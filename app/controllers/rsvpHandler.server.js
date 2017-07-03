@@ -1,24 +1,39 @@
 'use strict';
 
-var Bar = require('./app/models/bars.js');
-var User = require('./app/models/users.js');
+var Bar = require('../models/bars.js');
+var CircularJSON = require('circular-json');
+ 
+function RSVPHandler () {
 
-function rsvpHandler (db) {
-
-	var clicks = db.collection('rsvp');
-
-	this.getRSVPS = function (req, res) {
-
-		var rsvpProjection = { '_id': false };
-
-		Bar.findOne({}, rsvpProjection, function (err, result) {
-			if (err) {
-				throw err;
-			}
-
-			res.json(result);
-		});
+	this.getClicks = function (req, res) {
+		Bar
+			.findOne({ 'barID': req.params.barID })
+			.exec(function (err, result) {
+				if (err) { throw err; }
+				res.json(result.rsvps);
+			});
 	};
+
+	this.addClick = function (req, res) {
+		Bar
+			.findOneAndUpdate({'barID': req.params.barID}, { $inc: { 'rsvps': 1 } })
+			.exec(function (err, result) {
+					if (err) { throw err };
+					res.json(result.rsvps);
+				}
+			);
+	};
+
+	this.removeClick = function (req, res) {
+		Bar
+			.findOneAndUpdate({'barID': req.params.barID}, { $inc: {'rsvps': -1 }})
+			.exec(function (err, result) {
+					if (err) { throw err; }
+					res.json(result.rsvps);
+				}
+			);
+	};
+
 }
 
-module.exports = rsvpHandler;
+module.exports = RSVPHandler;

@@ -26,31 +26,32 @@ html
 						| Find
 			if bars
 				h1.text-center Bars in #{bars[0].location.city}
-				each bar in bars
+				each bar, index in bars
 					.row.bar-row
 						.col-md-4
 						.bar.col-md-4 
 							.bar-description
-								.rsvp
-									p
-										if bar.rsvps
-											| #{bar.rsvps} RSVPs
-										else
-											| 0 RSVPs
+								.rsvp(barid=bar.id)
+									p(class='rsvp-value')
 									i(class="fa fa-envelope-open send-rsvp" aria-hidden="true")
 								a(href=bar.url class="bar-url")
 									h4 #{bar.name}
 								p #{bar.location.display_address}
-								- var baseRating = Math.floor(bar.rating)
-								- for (var i = 0; i < baseRating; ++i) {
-									i(class="fa fa-star" aria-hidden="true")
-								- }
-								- if (Math.round(bar.rating) != baseRating) {
-									i(class="fa fa-star-half-o" aria-hidden="true")
-								- }
+								a(href=bar.url class="bar-url")
+									- var baseRating = Math.floor(bar.rating)
+									- for (var i = 0; i < baseRating; ++i) {
+										i(class="fa fa-star" aria-hidden="true")
+									- }
+									- if (Math.round(bar.rating) != baseRating) {
+										i(class="fa fa-star-half-o" aria-hidden="true")
+									- }
 						.col-md-4
-		.credits
-			p Coded by mishellscripts | Powered by Yelp
+			.row#credits
+				p Coded by mishellscripts | Powered by Yelp
 	script(src='https://code.jquery.com/jquery-2.2.1.min.js', integrity='sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=', crossorigin='anonymous')
 	script(src='https://use.fontawesome.com/82d62de1e5.js')
+	script(type='text/javascript').
+		var user = JSON.parse('!{JSON.stringify(user)}');
 	script(type='text/javascript', src='/public/js/main.js')
+	script(type="text/javascript" src="common/ajax-functions.js")
+	script(type="text/javascript" src="controllers/rsvpController.client.js")

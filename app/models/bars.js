@@ -10,7 +10,8 @@ var Bar = new Schema({
 	    city: {type: String, required: true},
 	},
 	rating: {type: Number}, 
-    rsvps: {type: Number, default: 0}
+    rsvps: {type: Number, default: 0},
+    barID: {type: String, required: true}
 });
 
 module.exports = mongoose.model('Bar', Bar);

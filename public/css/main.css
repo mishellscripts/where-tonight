@@ -129,11 +129,10 @@ body {
 	font-size: 2em !important;
 }
 
-.credits {
-	color: white;
+#credits {
 	font-size: 1.5em;
 	text-align: center;
-	margin-top: 100px;
+	padding-top: 100px;
 }
 
 .rsvp {

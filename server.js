@@ -5,8 +5,8 @@ const routes = require('./app/routes/index.js');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
-const cors = require('cors');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 require('dotenv').load();
@@ -27,7 +27,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
 app.use(bodyParser.json());                        
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -39,4 +38,27 @@ routes(app, passport);
 const port = process.env.PORT || 8080;
 app.listen(port,  function () {
 	console.log('Node.js listening on port ' + port + '...');
+});
+
+var Bar = require('./app/models/bars.js');
+var User = require('./app/models/users.js');
+User.remove({}, function(err) { 
+   console.log('collection removed') 
+});
+
+Bar.remove({}, function(err) { 
+   console.log('collection removed') 
+});
+
+app.all('*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'accept, content-type, x-parse-application-id, x-parse-rest-api-key, x-parse-session-token');
+     // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
 });
