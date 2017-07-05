@@ -14,7 +14,7 @@ Github authentication is used for security and login purposes and is accomplishe
 3) As an authenticated user, I can remove myself from a bar if I no longer want to go there.
 4) As an unauthenticated user, when I login I should not have to search again.
 
-Demo: https://wheretonight-mishellscripts.c9users.io/
+Demo: Heroku deployment coming soon.
 
 
 ## Quick Start Guide
