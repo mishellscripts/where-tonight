@@ -83,8 +83,3 @@ Node.js listening on port 8080...
 ```
 
 Next, open your browser and enter `http://localhost:8080/`. Congrats, you're up and running!
-
-
-## License
-
-MIT License. [Click here for more information.](LICENSE.md)
