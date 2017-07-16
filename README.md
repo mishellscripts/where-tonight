@@ -1,9 +1,9 @@
-# wheretonight
+# Where tonight?
 
 
 ## Overview
 
-'wheretonight' is a nightlife coordination application created as a part of the [FreeCodeCamp](https://www.freecodecamp.com/) backend certification curriculum.
+This is a nightlife coordination application created as a part of the [FreeCodeCamp](https://www.freecodecamp.com/) backend certification curriculum.
 Users can look up bars around their location and verify where they are headed for the night to share and keep a history for future references. 
 This application requires the Yelp Fusion API, ExpressJS web framework, MongoDB, Express, Pug, and Node.js. [Clementine](http://www.clementinejs.com/), a Javascript boilerplate, was used for quicker implementation. 
 Github authentication is used for security and login purposes and is accomplished by using [Passport](http://passportjs.org/). 
